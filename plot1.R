@@ -1,0 +1,17 @@
+library(dplyr)
+library(bindrcpp)
+library(ggplot2)
+NEI_data <- readRDS("summarySCC_PM25.rds")
+head(NEI_data)
+str(NEI_data
+dim(NEI_data)
+SCC_data <- readRDS("Source_Classification_Code.rds")
+
+head(SCC_data) 
+str(SCC_data)
+dim(SCC_data)
+yearly_emmissions <- aggregate(Emissions ~ year, NEI_data, sum)
+cols <- c("maroon", "orange", "yellow", "Aquamarine")
+barplot(height=yearly_emmissions$Emissions/1000, names.arg=yearly_emmissions$year, xlab="Year", ylab=expression('Aggregated Emission'),main=expression('Aggregated PM'[2.5]*' Emmissions by Year'), col = cols)
+dev.copy(png,'plot1.png')
+dev.off()
